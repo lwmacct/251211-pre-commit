@@ -18,7 +18,7 @@ repos:
 
   # 本仓库自定义检查 (作为远程 hooks 仓库)
   - repo: https://github.com/lwmacct/251211-pre-commit
-    rev: v1.0.0  # 使用固定的 git tag
+    rev: v1.0.0 # 使用固定的 git tag
     hooks:
       - id: prettier
       - id: mc-mdtoc
