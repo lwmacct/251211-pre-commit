@@ -1,0 +1,45 @@
+# Pre-commit hooks definition file
+# This file allows other projects to use this repository as a pre-commit hooks source
+
+- id: prettier
+  name: Format docs and configs with Prettier
+  description: Formats markdown, YAML, JSON and other files using Prettier
+  entry: prettier --write --ignore-unknown --no-error-on-unmatched-pattern
+  language: system
+  types: [text]
+  stages: [pre-commit]
+
+- id: mc-mdtoc
+  name: Update markdown TOC in docs
+  description: Updates table of contents in markdown files using mc-mdtoc
+  entry: mc-mdtoc -i
+  language: system
+  files: \.md$
+  stages: [pre-commit]
+
+- id: build-docs
+  name: Build VitePress docs
+  description: Builds VitePress documentation to ensure no build errors
+  entry: env CI=true NO_COLOR=1 TERM=dumb npm run build --prefix docs
+  language: system
+  pass_filenames: false
+  files: ^docs/
+  stages: [pre-commit]
+
+- id: golangci-lint
+  name: golangci-lint
+  description: Runs golangci-lint on all Go files
+  entry: golangci-lint run --new --fix
+  types: [go]
+  language: system
+  pass_filenames: false
+  stages: [pre-commit]
+
+- id: config-sync
+  name: Sync and validate config files
+  description: Validates config file changes by running config tests
+  entry: go test -run "TestGenerateExample|TestConfigKeysValid" ./internal/config/...
+  language: system
+  pass_filenames: false
+  files: ^(internal/config/config\.go|config/config\.yaml)$
+  stages: [pre-commit]
