@@ -28,7 +28,7 @@
 
 - id: golangci-lint
   name: golangci-lint
-  description: Runs golangci-lint on all Go files
+  description: Run golangci-lint to lint and fix Go code
   entry: golangci-lint run --new --fix
   types: [go]
   language: system
